@@ -1,25 +1,20 @@
 # This is a multi stage Dockefile.
 # This stage will be discarded after the build
 
-ARG ARCH
-ARG QEMU
-
-FROM $ARCH/alpine:latest as intermediate
+FROM alpine:latest as intermediate
 
 WORKDIR /usr/src/app
 
-ADD $QEMU /usr/bin
-
 COPY . /usr/src/app
 
-RUN apk add --no-cache make g++ ca-certificates wget shadow &&  \
+RUN apk add --no-cache make g++ ca-certificates wget shadow && \
     useradd -s /bin/sh noipuser && \
-    echo "Building on arch: $(uname -m)" && \
+    echo "Building on $(uname -m)" && \
     cd $(find . -maxdepth 1 -mindepth 1 -type d -name 'noip*') && \
     make && \
     cp noip2 /usr/bin
 
-FROM $ARCH/alpine:latest
+FROM alpine:latest
 
 ARG BUILD_DATE
 ARG VCS_REF
