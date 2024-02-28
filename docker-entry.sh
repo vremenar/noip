@@ -1,6 +1,6 @@
 #!/bin/sh
 
-noip2 $@
+noip2 $@ 
 
 cleanup() {
   echo "Caught Signal ... cleaning up."
