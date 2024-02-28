@@ -20,6 +20,4 @@ COPY --from=builder /etc/passwd /etc/
 
 USER noipuser
 
-RUN chmod +x /bin/docker-entry.sh
-
 ENTRYPOINT ["/bin/docker-entry.sh"]
