@@ -4,13 +4,11 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 
-RUN apk add --no-cache make g++ ca-certificates wget shadow
-RUN useradd -s /bin/sh noipuser
-#RUN cd $(find . -maxdepth 1 -mindepth 1 -type d -name 'noip*')
-RUN echo $(find . -maxdepth 1 -mindepth 1 -type d -name 'noip*')
-RUN cd "noip-2.1.9-1"
-RUN make
-RUN cp noip2 /usr/bin
+RUN apk add --no-cache make g++ ca-certificates wget shadow && \
+    useradd -s /bin/sh noipuser && \
+    cd $(find . -maxdepth 1 -mindepth 1 -type d -name 'noip*') && \
+    make && \
+    cp noip2 /usr/bin
 
 FROM alpine:latest
 
